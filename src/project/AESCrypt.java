@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package wisdomm;
+package project;
 
 import java.security.Key;
 import javax.crypto.Cipher;

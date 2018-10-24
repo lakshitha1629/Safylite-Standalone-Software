@@ -3,21 +3,34 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package wisdomm;
+package project;
 
+import Connection.DAC;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRTableModelDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
  * @author Lakshitha Perera
  */
-public class Paymentt extends javax.swing.JFrame {
+public class Payment extends javax.swing.JFrame {
 
     /**
      * Creates new form Mainmenu
      */
-    public Paymentt() {
+    public Payment() {
         initComponents();
     }
 
@@ -30,6 +43,8 @@ public class Paymentt extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         jLabel32 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -45,7 +60,6 @@ public class Paymentt extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel7 = new javax.swing.JLabel();
-        dateChooserCombo2 = new datechooser.beans.DateChooserCombo();
         jLabel8 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         regNo = new javax.swing.JTextField();
@@ -59,6 +73,7 @@ public class Paymentt extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         Subjectcode = new javax.swing.JTextField();
+        dateChooserCombo2 = new datechooser.beans.DateChooserCombo();
         jPanel9 = new javax.swing.JPanel();
         jSeparator3 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
@@ -70,12 +85,25 @@ public class Paymentt extends javax.swing.JFrame {
         amount_tec = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         sub_tec = new javax.swing.JTextField();
-        dateChooserCombo1 = new datechooser.beans.DateChooserCombo();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         inc = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
+        dateChooserCombo1 = new datechooser.beans.DateChooserCombo();
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Payment");
@@ -247,7 +275,7 @@ public class Paymentt extends javax.swing.JFrame {
                                 .addGroup(jPanel8Layout.createSequentialGroup()
                                     .addComponent(jLabel8)
                                     .addGap(18, 18, 18)
-                                    .addComponent(dateChooserCombo2, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(dateChooserCombo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel8Layout.createSequentialGroup()
                                     .addComponent(jLabel11)
                                     .addGap(18, 18, 18)
@@ -259,8 +287,8 @@ public class Paymentt extends javax.swing.JFrame {
                                         .addComponent(jLabel13)
                                         .addGap(41, 41, 41)
                                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(Subjectcode, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(regNo, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(regNo, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(Subjectcode, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addGroup(jPanel8Layout.createSequentialGroup()
                                             .addComponent(jButton5)
@@ -275,8 +303,7 @@ public class Paymentt extends javax.swing.JFrame {
                                             .addGap(18, 18, 18)
                                             .addComponent(jLabel7)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(sub_st, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                            .addComponent(sub_st, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
                 .addContainerGap())
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel8Layout.createSequentialGroup()
@@ -310,7 +337,7 @@ public class Paymentt extends javax.swing.JFrame {
                     .addComponent(jLabel11)
                     .addComponent(dis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel8)
                     .addComponent(dateChooserCombo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35)
@@ -402,7 +429,7 @@ public class Paymentt extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator4, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
+                .addComponent(jSeparator4)
                 .addContainerGap())
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGap(75, 75, 75)
@@ -422,10 +449,6 @@ public class Paymentt extends javax.swing.JFrame {
                             .addGroup(jPanel9Layout.createSequentialGroup()
                                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel9Layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(dateChooserCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel9Layout.createSequentialGroup()
                                         .addComponent(jLabel6)
                                         .addGap(18, 18, 18)
                                         .addComponent(amount_tec, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -436,9 +459,13 @@ public class Paymentt extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(sub_tec, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(sub_tec, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(18, 18, 18)
+                                .addComponent(dateChooserCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(8, 8, 8)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(177, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -513,6 +540,7 @@ public class Paymentt extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        printTeachers();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -522,6 +550,16 @@ public class Paymentt extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        
+        if(!(regNo.getText().isEmpty())){
+        print();
+        
+        }else{
+            JOptionPane.showMessageDialog(this, "Enter Reg no");
+        }
+        
+        
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void regNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regNoActionPerformed
@@ -556,20 +594,17 @@ public class Paymentt extends javax.swing.JFrame {
         String Amount = amount.getText();
         String Discount = dis.getText();
         String NoSubject = sub_st.getText();
-        String DateStd = dateChooserCombo2.getText();
+        String DateStd = dateFormat(dateChooserCombo1.getCurrent().getTime());
 
+        System.out.println(DateStd);
         if (!(Reg.isEmpty() || SubjectCode.isEmpty() || Amount.isEmpty() || Discount.isEmpty() || NoSubject.isEmpty() || DateStd.isEmpty())) {
             try {
-             Statement stmt = new DBConnector().getConnection().createStatement();
-             String query1="INSERT INTO payment(student_id, subject_id, payment_date, discount, amount) VALUES ('"+Reg+"','"+SubjectCode+"','"+DateStd+"','"+Discount+"','"+Amount+"')";
-             
-                
-                
-                
-                
-                
-                
-                
+                Statement stmt = new DAC().getConnection().createStatement();
+                String query1 = "INSERT INTO payment(student_id, subject_id, payment_date, discount, amount) VALUES ('" + Reg + "','" + SubjectCode + "','" + DateStd + "','" + Discount + "','" + Amount + "')";
+                stmt.executeUpdate(query1);
+
+                JOptionPane.showMessageDialog(rootPane, "Add Payments");
+
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(rootPane, e.getMessage());
             }
@@ -580,24 +615,20 @@ public class Paymentt extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-
-        String TeacherReg = teacher.getText();
+ String TeacherReg = teacher.getText();
         String TecAmount = amount_tec.getText();
         String Incentive = inc.getText();
         String TecNoSubject = sub_tec.getText();
-        String TecDate = dateChooserCombo1.getText();
+        String TecDate = dateFormat(dateChooserCombo2.getCurrent().getTime());
 
         if (!(TeacherReg.isEmpty() || TecAmount.isEmpty() || Incentive.isEmpty() || TecNoSubject.isEmpty() || TecDate.isEmpty())) {
             try {
-             Statement stmt = new DBConnector().getConnection().createStatement();
-             String query1="INSERT INTO teacher_payment(amount, incentive, payment_date, teacher_id) VALUES ('"+TecAmount+"','"+Incentive+"','"+TecDate+"','"+TeacherReg+"')";
-             
-                
-                
-                
-                
-                
-                
+                Statement stmt = new DAC().getConnection().createStatement();
+                String query1 = "INSERT INTO teacher_payment(amount, incentive, payment_date, teacher_id) VALUES ('" + TecAmount + "','" + Incentive + "','" + TecDate + "','" + TeacherReg + "')";
+                stmt.executeUpdate(query1);
+
+                JOptionPane.showMessageDialog(rootPane, "Add Payments");
+
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(rootPane, e.getMessage());
             }
@@ -607,12 +638,78 @@ public class Paymentt extends javax.swing.JFrame {
         }
 
 
+
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void SubjectcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubjectcodeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_SubjectcodeActionPerformed
 
+       String getDate() {
+
+        Date d = new Date();
+        SimpleDateFormat sm = new SimpleDateFormat("yyy/MM/dd");
+        return sm.format(d);
+
+    }
+
+    String dateFormat(Date d) {
+        SimpleDateFormat d1 = new SimpleDateFormat("yyy/MM/dd");
+        return d1.format(d);
+    }
+      void print() {
+
+        try {
+             
+            JRTableModelDataSource datasource = new JRTableModelDataSource(jTable1.getModel());
+            String reportSource = "report/sticker.jrxml";
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("box_no", regNo.getText());
+            params.put("pick_date", dateFormat(dateChooserCombo1.getCurrent().getTime()));
+            params.put("exp_date", Subjectcode.getText());
+            params.put("to", dis.getText());
+            params.put("gross",amount.getText());
+         //   System.out.println("wei " + weight);
+
+            JasperReport jasperReport = JasperCompileManager.compileReport(reportSource);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, datasource);
+
+            JasperViewer.viewReport(jasperPrint, true);
+            JasperPrintManager p = new JasperPrintManager();
+            p.printPage(jasperPrint, 0, false);
+
+        } catch (Exception e) {
+            System.out.println("" + e);
+        }
+
+    }
+    
+    void printTeachers() {
+
+        try {
+             
+            JRTableModelDataSource datasource = new JRTableModelDataSource(jTable1.getModel());
+            String reportSource = "report/teacher.jrxml";
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("box_no", teacher.getText());
+            params.put("pick_date", dateFormat(dateChooserCombo2.getCurrent().getTime()));
+            params.put("exp_date", inc.getText());
+            params.put("to", dis.getText());
+            params.put("gross",amount_tec.getText());
+         //   System.out.println("wei " + weight);
+
+            JasperReport jasperReport = JasperCompileManager.compileReport(reportSource);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, datasource);
+
+            JasperViewer.viewReport(jasperPrint, true);
+            JasperPrintManager p = new JasperPrintManager();
+            p.printPage(jasperPrint, 0, false);
+
+        } catch (Exception e) {
+            System.out.println("" + e);
+        }
+
+    }
     /**
      * @param args the command line arguments
      */
@@ -630,21 +727,27 @@ public class Paymentt extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Paymentt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Payment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Paymentt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Payment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Paymentt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Payment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Paymentt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Payment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Paymentt().setVisible(true);
+                new Payment().setVisible(true);
             }
         });
     }
@@ -688,10 +791,12 @@ public class Paymentt extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTextField regNo;
     private javax.swing.JTextField sub_st;
     private javax.swing.JTextField sub_tec;

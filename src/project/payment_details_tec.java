@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package wisdomm;
+package project;
 
+import Connection.DAC;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -29,7 +30,7 @@ public class payment_details_tec extends javax.swing.JFrame {
         try {
 
             DefaultTableModel def = (DefaultTableModel) jTable2.getModel();
-            Statement stmt = new DBConnector().getConnection().createStatement();
+            Statement stmt = new DAC().getConnection().createStatement();
             ResultSet rt = stmt.executeQuery("SELECT teacher_payment.payment_date,teacher.name,teacher_payment.amount,teacher_payment.incentive "
                     + "FROM teacher_payment INNER JOIN teacher ON teacher_payment.teacher_payment_id = teacher.teacher_id;");
             def.setRowCount(rt.getRow());
@@ -54,7 +55,11 @@ public class payment_details_tec extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
+        entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("safylite?zeroDateTimeBehavior=convertToNullPU").createEntityManager();
+        paymentQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT p FROM Payment p");
+        paymentList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : paymentQuery.getResultList();
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -76,14 +81,13 @@ public class payment_details_tec extends javax.swing.JFrame {
             }
         });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Title 1", "Title 2"
-            }
-        ));
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, paymentList, jTable2);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ObjectProperty.create());
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ObjectProperty.create());
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ObjectProperty.create());
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ObjectProperty.create());
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
         jScrollPane2.setViewportView(jTable2);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/pay_1.jpg"))); // NOI18N
@@ -119,6 +123,8 @@ public class payment_details_tec extends javax.swing.JFrame {
                 .addContainerGap(53, Short.MAX_VALUE))
         );
 
+        bindingGroup.bind();
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -129,7 +135,7 @@ public class payment_details_tec extends javax.swing.JFrame {
             // TODO add your handling code here:
 
             DefaultTableModel def = (DefaultTableModel) jTable2.getModel();
-            Statement stmt = new DBConnector().getConnection().createStatement();
+            Statement stmt = new DAC().getConnection().createStatement();
             ResultSet rt = stmt.executeQuery("SELECT * FROM teacher.name, subject.name WHERE teacher_payment LIKE '%"+ jTextField1.getText() + "%'");
           
             def.setRowCount(rt.getRow());
@@ -180,6 +186,10 @@ public class payment_details_tec extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -190,10 +200,14 @@ public class payment_details_tec extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.persistence.EntityManager entityManager;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
+    private java.util.List<project.Payment> paymentList;
+    private javax.persistence.Query paymentQuery;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

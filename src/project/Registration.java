@@ -1,7 +1,9 @@
-package wisdomm;
+package project;
 
+import Connection.DAC;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Pattern;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
@@ -482,6 +484,19 @@ public class Registration extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
+           String getDate() {
+
+        Date d = new Date();
+        SimpleDateFormat sm = new SimpleDateFormat("yyy/MM/dd");
+        return sm.format(d);
+
+    }
+
+    String dateFormat(Date d) {
+        SimpleDateFormat d1 = new SimpleDateFormat("yyy/MM/dd");
+        return d1.format(d);
+    }
+    
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         String firstname = fname.getText();
@@ -491,7 +506,7 @@ public class Registration extends javax.swing.JFrame {
         String Re_password = String.valueOf(jPasswordField2.getPassword());
         String School = scl.getText();
         String Gender = "";
-        try {    
+        try {
             if (jRadioButton1.isSelected()) {
                 Gender = jRadioButton1.getText();
             }
@@ -502,59 +517,38 @@ public class Registration extends javax.swing.JFrame {
 
         }
         String Grade = grade.getText();
-        String dob  = dateChooserCombo1.getText();
-        String parentname = Parentname.getText();
-        String Mobile = mo.getText();
-        String telephone = tel.getText();
+        //String dob = dateChooserCombo1.getText();
+        String dob  = dateFormat(dateChooserCombo1.getCurrent().getTime());
+        String pfirstname = Parentname.getText();
+        String plastname = lname.getText();
+        
+        int Mobile = Integer.parseInt(mo.getText());
+        int telephone = Integer.parseInt(tel.getText());
         String NIC = nic.getText();
         String Address = address.getText();
         String City = city.getText();
-        int Age=0;
-        int Activated=0;
-        String user_type="parent";
-        JOptionPane.showMessageDialog(Registration.this,dob);
-       if(!(firstname.isEmpty() || lastname.isEmpty() || user.isEmpty() || password.isEmpty() || Re_password.isEmpty() || School.isEmpty() || Gender.isEmpty() || Grade.isEmpty() || Grade.isEmpty() || dob.isEmpty() || parentname.isEmpty() || Mobile.isEmpty() || NIC.isEmpty() || Address.isEmpty() || City.isEmpty() || telephone.isEmpty())){ 
-            try{
-             String encryptedPassword = AESCrypt.encrypt(password);
-             Statement stmt = new DBConnector().getConnection().createStatement();
-             String query1 = "INSERT INTO student(first_name,last_name,gender,dob,school,barcode,age) VALUES('"+firstname+"','"+lastname+"','"+Gender+"','"+dob+"','"+School+"','"+encryptedPassword+"','"+Age+"')";
-             String query2="INSERT INTO user_account(user_name,user_type,password,activated) VALUES('"+user+"','"+user_type+"','"+ password+"','"+Activated+"')"; 
-             String query3="INSERT INTO parent(parent_name,adress_line1,city,mobile,telephone,nic) VALUES('"+parentname+"','"+Address+"','"+ City+"','"+Mobile+"','"+telephone+"','"+nic+"')"; 
-             
-         if (!(Mobile.charAt(0)=='0'&& Mobile.length()==10 && Mobile.matches("[0-9]+"))){
-             JOptionPane.showMessageDialog(null, "Invalid phone number");
-          
-         }else if(!(Pattern.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{5,15}$",jPasswordField1.getText()))){
-            JOptionPane.showMessageDialog(null,"Invalid password ,must containt simple & capital letters,minimum 1 number and minimum 5 letters");
-            
-         }else if(!(password.matches(Re_password))){
-             JOptionPane.showMessageDialog(null, "Password re-entered incorrectly");
-             
-         }else if (!(NIC.trim().matches("^[0-9]{9}[vVxX]$"))){
-             JOptionPane.showMessageDialog(null, "Invalid NIC");
-            
-         }else  {
-              stmt.executeUpdate(query1, Statement.RETURN_GENERATED_KEYS);
-             JOptionPane.showMessageDialog(null, "Registration Success !");
-            
-         }
-         
-         
-         
-         
-         
-         
-    
-     }catch(Exception e){
-                JOptionPane.showMessageDialog(rootPane,e.getMessage());
-        }
+        int Age = 0;
+        int Activated = 0;
+        String user_type = "p";
+        String Barcode="";
+        
+        try {
+            String encryptedPassword = AESCrypt.encrypt(password);
+            Statement stmt = new DAC().getConnection().createStatement();
+            String query1 = "INSERT INTO student(first_name,last_name,gender,dob,school,barcode,age) VALUES('" + firstname + "','" + lastname + "','" + Gender + "','" + dob + "','" + School + "','" + Barcode + "','" + Age + "')";
+            stmt.executeUpdate(query1);
+            String query2 = "INSERT INTO user_account(user_id ,user_name,user_type,password,activated) VALUES(' 001 ','" + user + "','" + user_type + "','" + encryptedPassword + "','" + Activated + "')";
+            stmt.executeUpdate(query2);
+            String query3 = "INSERT INTO parent(first_name,last_name,address_line,city,mobile,telephone,nic) VALUES('" + pfirstname + "','" + plastname + "','" + Address + "','" + City + "','" + Mobile + "','" + telephone + "','" + NIC + "')";
+            stmt.executeUpdate(query3);
+
+            JOptionPane.showMessageDialog(rootPane, "Registration Success");
 
         
-        
-        
-       }else{
-        JOptionPane.showMessageDialog(this, "Please Add the fields");
-       }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+        }
+
         //javax.swing.JOptionPane.showMessageDialog(Registration.this,rediotext);
     }//GEN-LAST:event_jButton2ActionPerformed
 

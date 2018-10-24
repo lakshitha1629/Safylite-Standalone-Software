@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package wisdomm;
+package project;
 
+import Connection.DAC;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
@@ -134,7 +135,7 @@ public class Login extends javax.swing.JFrame {
 
         try {
             String encryptedPassword = AESCrypt.encrypt(password);
-            Statement stmt = new DBConnector().getConnection().createStatement();
+            Statement stmt = new DAC().getConnection().createStatement();
             String query = "SELECT * FROM user_account WHERE user_name='" + username + "' AND password='" + encryptedPassword + "'";
             ResultSet rs = stmt.executeQuery(query);
             if (rs.next()) {
@@ -189,6 +190,7 @@ public class Login extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

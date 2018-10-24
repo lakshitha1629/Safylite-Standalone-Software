@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package wisdomm;
+package project;
 
+import Connection.DAC;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -29,8 +30,8 @@ public class payment_details_st extends javax.swing.JFrame {
         try {
 
             DefaultTableModel def = (DefaultTableModel) jTable2.getModel();
-            Statement stmt = new DBConnector().getConnection().createStatement();
-            ResultSet rt = stmt.executeQuery("SELECT payment.payment_date, student.first_name,student.last_name,payment.amount,payment.discount "
+            Statement stmt = new DAC().getConnection().createStatement();
+            ResultSet rt = stmt.executeQuery("SELECT student.first_name,student.last_name,payment.amount,payment.discount,payment.payment_date "
                     + "FROM payment INNER JOIN student ON payment.payment_id = student.student_id;");
             def.setRowCount(rt.getRow());
 
@@ -38,7 +39,10 @@ public class payment_details_st extends javax.swing.JFrame {
                 Vector v = new Vector();
                 v.add(rt.getString(1));
                 v.add(rt.getString(2));
-
+                v.add(rt.getString(3));
+                v.add(rt.getString(4));
+                v.add(rt.getString(5));
+               
                 def.addRow(v);
             }
         } catch (SQLException ex) {
@@ -81,7 +85,7 @@ public class payment_details_st extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Title 1", "Title 2"
+                "first_name", "last_name", "amount ", "discount ", "payment_date"
             }
         ));
         jScrollPane2.setViewportView(jTable2);
@@ -102,7 +106,7 @@ public class payment_details_st extends javax.swing.JFrame {
                     .addComponent(jLabel1))
                 .addGap(77, 77, 77)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,7 +120,7 @@ public class payment_details_st extends javax.swing.JFrame {
                             .addComponent(jButton1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -129,7 +133,7 @@ public class payment_details_st extends javax.swing.JFrame {
             // TODO add your handling code here:
 
             DefaultTableModel def = (DefaultTableModel) jTable2.getModel();
-            Statement stmt = new DBConnector().getConnection().createStatement();
+            Statement stmt = new DAC().getConnection().createStatement();
             ResultSet rt = stmt.executeQuery("SELECT * FROM student.first_name, student.last_name WHERE payment LIKE '%"+ jTextField1.getText() +"%'");
            
             def.setRowCount(rt.getRow());
@@ -176,6 +180,8 @@ public class payment_details_st extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(payment_details_st.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
